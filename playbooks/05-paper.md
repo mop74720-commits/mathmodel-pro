@@ -7,3 +7,14 @@
 - 图表按证据需求生成，不按数量生成。
 - 模型公式、代码实现、结果表述必须一致。
 - 摘要最后定稿，但应从早期开始维护草稿。
+
+
+## 论文工程
+
+默认使用 `templates/competition-repo/paper/` 的结构：
+
+- `main.tex` 只做总装；
+- `sections/` 按问题与“模型/求解/验证”拆分；
+- `draft` 显示 TODO，`release` 隐藏 TODO；
+- `reference/`、`src/`、`figures/` 与论文正文分离；
+- 发布候选不等于格式合规，最终仍需按当届官方规则审计。

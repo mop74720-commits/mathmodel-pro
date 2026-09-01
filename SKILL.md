@@ -1,6 +1,6 @@
 ---
 name: mathmodel-pro
-version: 0.1.0
+version: 0.2.0
 description: 数学建模竞赛教练层。负责大方向、阶段判断、时间策略、质量底线、模板和专项 Skill 路由，不直接承担所有具体算法任务。
 ---
 
@@ -108,7 +108,13 @@ description: 数学建模竞赛教练层。负责大方向、阶段判断、时�
 - `PAPER_INCONSISTENT` -> audit/consistency-check
 - `PRE_SUBMISSION` -> audit/final-audit
 
-## 8. 比赛仓库应维护的最小权威文件
+## 8. 比赛仓库模板
+
+真实比赛仓库从 `templates/competition-repo/` 初始化。该模板吸收分章节论文工程、草稿/发布双模式和 `reference/src/paper` 职责分离，同时加入本教练层的事实、Run 与证据链。
+
+模板是工程骨架，不是当届官方版式；最终论文格式必须以当届官方规则为唯一权威。
+
+## 9. 比赛仓库应维护的最小权威文件
 
 - `problem/FACTS.md`
 - `problem/ASSUMPTIONS.md`
@@ -119,7 +125,7 @@ description: 数学建模竞赛教练层。负责大方向、阶段判断、时�
 - `audit/DECISION_LOG.md`
 - `ai/AI_USAGE_LOG.md`
 
-## 9. 禁止事项
+## 10. 禁止事项
 
 - 不为复杂而复杂。
 - 不把第一个能跑的模型直接当最终模型。
@@ -129,7 +135,7 @@ description: 数学建模竞赛教练层。负责大方向、阶段判断、时�
 - 不在比赛后期无必要地重构核心模型。
 - 不让 AI 生成的核心结论未经人工核验直接进入论文。
 
-## 10. 教练输出格式
+## 11. 教练输出格式
 
 每次介入比赛时优先回答五件事：
 

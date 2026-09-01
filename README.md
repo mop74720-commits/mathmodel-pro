@@ -28,3 +28,8 @@
 READ -> FREEZE -> MODEL -> IMPLEMENT -> VERIFY -> WRITE -> AUDIT -> SUBMIT
 
 详见 `SKILL.md` 与 `playbooks/`。
+
+
+## Competition template
+
+`templates/competition-repo/` 是真实比赛 Git 仓库初始化骨架。其论文部分借鉴 `chenboshuo/cumcm_template` 的分文件与多构建模式思想，但不继承旧版版式规则。
