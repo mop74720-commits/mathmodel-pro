@@ -1,8 +1,15 @@
 # Changelog
 
-## 0.3.2
+## 0.3.3
 
-- 2020C rehearsal integration patch: State-first Coach, registry-based SkillHub routing, independent Competition Template authority, version/route validation.
+- 增加 Official Rules first-class fact 约束；正式竞赛主动核验当前届次官方规则。
+- 规则未知可继续科学工作，但不得判 `SUBMISSION_READY`。
+- submission readiness 必须同时闭合规则、AI 披露与支撑材料硬要求。
+- 不新增固定阶段或时间 Gate。
+
+## 0.3.3
+
+- full-system integration patch: State-first Coach, registry-based SkillHub routing, independent Competition Template authority, version/route validation.
 
 ## v0.3.0
 

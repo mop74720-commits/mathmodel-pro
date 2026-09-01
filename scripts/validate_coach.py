@@ -6,7 +6,9 @@ errors=[]
 skill=(ROOT/'SKILL.md').read_text(encoding='utf-8')
 readme=(ROOT/'README.md').read_text(encoding='utf-8')
 for label,text in [('SKILL.md',skill),('README.md',readme)]:
-    if '0.3.2' not in text: errors.append(f'{label}: version 0.3.2 missing')
+    if '0.3.3' not in text: errors.append(f'{label}: version 0.3.3 missing')
+for phrase in ['OFFICIAL_RULES_NEEDED','RULE_PROFILE.json','PENDING_OFFICIAL_RULES_VERIFICATION','不得**给出 `SUBMISSION_READY`']:
+    if phrase not in skill: errors.append(f'SKILL.md: official-rules closure missing {phrase}')
 for stale in ['experiment/self-attack','audit/consistency-check','audit/final-audit','models/qN.md','runs/final/qN.json']:
     if stale in skill: errors.append(f'SKILL.md: stale contract {stale}')
 if 'SkillHub `registry.yaml`' not in skill and 'SkillHub 的 `registry.yaml`' not in skill:

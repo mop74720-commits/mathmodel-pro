@@ -1,6 +1,6 @@
-# mathmodel-pro v0.3.2
+# mathmodel-pro v0.3.3
 
-数学建模竞赛 Coach 层。v0.3.2 根据 2020C 全系统演练把顶层决策正式改为 **State-first**。
+数学建模竞赛 Coach 层。v0.3.3 根据完整三层系统演练与集成审计，把顶层决策正式改为 **State-first**。
 
 ## 三层关系
 
@@ -26,3 +26,11 @@ Coach 默认从 Competition Repo 的 `PROJECT_STATUS.md`、FACTS、QUESTION_MAP�
 ```bash
 python scripts/validate_coach.py
 ```
+
+
+## v0.3.3 Official-Rules Closure
+
+- 正式竞赛开始后主动核验当届官方规则，不再把“用户未上传规则”视为可忽略的外部事项。
+- 规则未核验不阻塞前期建模，但硬性禁止 `SUBMISSION_READY`。
+- 将 `rules/RULE_PROFILE.json` 作为 Competition Repo 内当前届次规则状态的机器伴随文件；人类可读来源仍保存在 `rules/OFFICIAL_RULES.md`。
+- AI 使用与支撑材料要求被纳入提交判断，但不得虚构 AI 日志或人工核验。

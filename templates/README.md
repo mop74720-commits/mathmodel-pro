@@ -1,5 +1,5 @@
 # Templates
 
-As of v0.3.2, the authoritative Competition Repo template is the independent `competition-template` package/repository.
+As of v0.3.3, the authoritative Competition Repo template is the independent `competition-template` package/repository.
 
 The old embedded template has been deprecated to avoid two competing sources of truth.
