@@ -1,15 +1,19 @@
-# Changelog
+# CHANGELOG
+
+## 0.3.0
+
+- Rebased the coach knowledge layer on the useful content of `ll2010650-coder/mathmodel-pro` (MIT) instead of keeping short placeholders.
+- Added generic interaction/execution rules, document-handling rules, expanded modeling norms, visualization rules, two historical case notes, training-paper failure patterns, and award-paper argument patterns.
+- Added portable Word/Pandoc tools derived from upstream MIT scripts and generated a local reference DOCX asset.
+- Reworked the competition template into **single-choice dual paper tracks**: `paper/latex/` and `paper/word/`.
+- Reimplemented the useful `cumcm_template` ideas (sectionized source, draft/release, support-tree, reference/src separation) without copying its unlicensed class/source files.
+- Added CUMCM 2026 official-rules quick reference and explicit AI-usage workflow.
+- Removed personal profile, hardcoded local paths, MATLAB-only, mandatory Obsidian, and private minimum-page/minimum-figure KPIs.
 
 ## 0.2.0
-- 重构 `templates/` 为完整 `competition-repo/` 初始化模板。
-- 吸收 `chenboshuo/cumcm_template` 的 `reference/src/paper` 职责分离、论文分章节、draft/release 构建与支撑材料文件树思想。
-- 不复制旧版 `cumcmthesis.cls`，明确当届官方格式优先。
-- 将 FACTS、METHOD CONTRACT、RUN LEDGER、Claim-Evidence、AI Log 直接嵌入比赛仓库模板。
-- 新增跨平台 `Makefile` / `make.ps1` 论文构建骨架。
+
+- Added competition-repo template and sectionized LaTeX scaffold.
 
 ## 0.1.0
-- 首次建立“教练层”定位。
-- 固化 8 阶段主流程与 4 Gate。
-- 加入 74 小时时间策略。
-- 分离专项 Skill 与教练职责。
-- 提供 Git、Method Contract、Run Ledger、Evidence Map、AI Usage 模板。
+
+- Initial coach-layer architecture.
