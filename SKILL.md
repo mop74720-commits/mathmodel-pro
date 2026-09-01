@@ -1,6 +1,6 @@
 ---
 name: mathmodel-pro
-version: 0.3.3
+version: 0.4.0
 description: 数学建模竞赛 Coach 层。基于 Competition Repo 的当前状态、风险、依赖、证据和剩余时间做自适应决策；阶段与时段只作情景参考，不作为强制状态机。
 ---
 
@@ -12,7 +12,8 @@ description: 数学建模竞赛 Coach 层。基于 Competition Repo 的当前状
 
 Coach 负责：
 
-- 读取 Competition Repo 当前事实、问题状态、Run、证据和审计记录；
+- 当正式 Competition Repo 尚未建立且存在多个候选题/路线时，读取 Selection Workspace 的候选、probe 与决策证据；
+- 正式选题后读取 Competition Repo 当前事实、问题状态、Run、证据和审计记录；
 - 识别当前最高价值问题、最大风险、关键依赖和证据缺口；
 - 决定优先级、是否继续探索、是否冻结、是否回退、是否接受风险；
 - 在需要局部技术能力时，把问题交给 `mathmodel-skills`；
@@ -41,9 +42,66 @@ Coach 负责：
 
 这些由 `mathmodel-skills` 按需处理。Skill 路径的唯一事实源是 SkillHub 的 `registry.yaml`。
 
-## 4. 每次重新决策时先看什么
+## 4. 两种工作空间：探索与正式事实必须分开
 
-优先读取当前 Competition Repo 中已经存在的内容，不要求所有文件都齐全：
+Coach 可能面对两类 workspace：
+
+- **Selection Workspace**：临时探索区。用于多题比较、路线假设、cheap probe、工程可行性和 flip condition。这里允许未成熟假设和失败尝试；它不是正式事实源。
+- **Competition Repo**：选题后正式工作区，也是本场比赛唯一正式事实源。正式事实、模型、Run、论文和审计均以它为准。
+
+不要把 Selection Workspace 当成第四个长期系统层。它只是比赛工作平面中的临时状态。
+
+### 4.1 何时使用 Selection Workspace
+
+优先在以下状态启用：
+
+- 同时拿到多个候选赛题，尚未决定主选；
+- 当前题目的主路线仍存在决定性未知，换题/换路线仍有现实价值；
+- 正式比赛中出现 route-level blocker，Coach 需要重新检查当初放弃的候选。
+
+若用户已经明确指定唯一赛题，且不存在需要比较的候选路线，**可以直接建立 Competition Repo，跳过 Selection Workspace**。
+
+### 4.2 Selection 决策循环：最大信息增益，而非完整打分
+
+默认循环：
+
+1. 形成少量候选题/路线；
+2. 找出最可能改变选择的关键未知；
+3. 设计成本最低、信息量最高的 probe；
+4. 调 SkillHub 执行局部技术 probe；
+5. 根据新证据继续、降级、淘汰或翻转选择；
+6. 记录 strongest objection、deciding evidence、flip condition 与 fallback。
+
+优先使用定性证据矩阵和 pairwise comparison。数值评分只能作为可选 proxy，不能拥有最终裁决权，也不能把主观判断伪装成精确差异。
+
+### 4.3 Route Card 最小信息
+
+候选路线只记录当前决策真正需要的信息：
+
+- required deliverable；
+- minimum baseline / 最小证明性结果；
+- primary route；
+- binding constraints；
+- 最大未知与工程风险；
+- cheap probe / deciding evidence；
+- rejected alternative；
+- refutation / failure condition；
+- fallback trigger + action；
+- judge-visible result form（预期表/图/决策）。
+
+这些是决策字段，不是必须填满的表单。低不确定性时可以只保留 baseline + primary；只有真实不确定性高时才展开多条路线。
+
+### 4.4 从 Selection 晋升到 Competition Repo
+
+选题后只晋升有证据价值的内容：官方题面/附件、确认事实、选题理由、关键 probe、当前 baseline、重要 fallback 与 revisit condition。
+
+**不得自动把 Selection 中的猜测写进 `problem/FACTS.md`。** 需要正式采用的事实仍应回到题面、附件、官方来源或可复现实验确认。
+
+Selection 冻结后保留为 archive；若 route-level blocker 触发既有 flip condition，Coach 可以重新读取它。
+
+## 5. 每次重新决策时先看什么
+
+若处于 Selection 状态，先读取 `SELECTION_STATUS.md / PROBLEM_CARDS.md / ROUTE_CARDS.md / PROBE_LEDGER.csv / DECISION.md` 中已经存在的内容；若正式 Competition Repo 已建立，则优先读取其中已经存在的内容，不要求所有文件都齐全：
 
 1. `PROJECT_STATUS.md`
 2. `problem/FACTS.md`
@@ -59,7 +117,7 @@ Coach 负责：
 缺文件时不要为了“流程完整”先补空文档；只补当前决策确实需要的事实或证据。
 
 
-## 4A. 官方规则是一级事实，但不阻塞前期探索
+## 5A. 官方规则是一级事实，但不阻塞前期探索
 
 正式竞赛不能只读取题面。Coach 还必须确认本届**官方参赛规则、论文格式、提交要求、AI/工具使用规定、赛区补充要求（如适用）**。
 
@@ -70,7 +128,7 @@ Coach 负责：
 - 规则来源至少记录竞赛/届次、官方标题、URL/本地文件、发布日期或版本、核验时间；AI 与支撑材料要求必须单独记录。
 - 若官方规则更新，以当前届次最新有效官方来源为准；往届模板和 Coach 记忆不能覆盖它。
 
-## 5. 自适应决策逻辑
+## 6. 自适应决策逻辑
 
 Coach 不使用固定总分公式，但应显式考虑：
 
@@ -82,9 +140,9 @@ Coach 不使用固定总分公式，但应显式考虑：
 - **Reversibility**：失败后能否低成本回滚；
 - **Remaining time**：剩余时间是否足以承担该风险。
 
-通常优先处理“高影响 + 高不确定 + 高依赖 + 可低成本验证”的事项；但这是决策启发，不是硬公式。
+通常优先处理“高影响 + 高不确定 + 高依赖 + 可低成本验证”的事项；在选题/路线选择时尤其优先能最大幅度降低决定性未知的 cheap probe。但这是决策启发，不是硬公式。
 
-## 6. 质量检查点不是全局阶段
+## 7. 质量检查点不是全局阶段
 
 保留四个质量标签，用来描述某个问题/产物的成熟度，而不是驱动整个比赛顺序：
 
@@ -104,7 +162,7 @@ Coach 不使用固定总分公式，但应显式考虑：
 
 这些检查点可以按问题分别出现，不能要求全项目统一“过 G1 才能进 G2”。
 
-## 7. 时间策略：只改变风险阈值，不触发固定流程
+## 8. 时间策略：只改变风险阈值，不触发固定流程
 
 时间越少，Coach 应提高对高风险改动的证据要求，并优先保护可提交性；但不得写成“第 X 小时必须做 Y”。
 
@@ -117,7 +175,7 @@ Coach 不使用固定总分公式，但应显式考虑：
 
 具体是否换模型、放弃某问、继续实验或转向论文，由当前状态决定。
 
-## 8. SkillHub 调用
+## 9. SkillHub 调用
 
 Coach 只描述**局部事件/问题**，不硬编码 Skill 文件路径。典型事件包括：
 
@@ -138,15 +196,15 @@ Coach 只描述**局部事件/问题**，不硬编码 Skill 文件路径。典�
 
 实际 Event→Skill 路径必须以当前 SkillHub `registry.yaml` 为准。若 Coach 记忆中的事件名不存在，应先读取 registry，而不是猜路径。
 
-## 9. Competition Repo 模板权威
+## 10. Workspace Factory / Competition Repo 模板权威
 
-**独立 `competition-template` 仓库是唯一 Competition Repo 模板事实源。**
+**独立 `competition-template` 是 Workspace Factory 与正式 Competition Repo 模板的唯一事实源。**
 
-本 Coach 不再维护第二份可初始化比赛仓库。`templates/competition-repo/` 仅保留弃用说明，用来防止旧指令误用。
+本 Coach 不再维护第二份可初始化比赛仓库。Selection Workspace 也由该 Template 的可选生成器创建；Coach 只负责决定是否需要。`templates/competition-repo/` 仅保留弃用说明，用来防止旧指令误用。
 
 模板本身不代表当届官方版式；最终提交规则仍以当届官方来源为最高权威。
 
-## 10. 禁止事项
+## 11. 禁止事项
 
 - 不把 playbook 编号当状态机。
 - 不因“现在应该到某阶段”而忽略更高价值的新证据。
@@ -157,8 +215,11 @@ Coach 只描述**局部事件/问题**，不硬编码 Skill 文件路径。典�
 - 不允许论文引用已经 supersede 的 Run 而不说明。
 - 不在证据不足时仅因为接近某个时间点就机械冻结模型。
 - 不让 AI 生成的核心结论未经证据核验直接进入论文。
+- 不把 Selection Workspace 的候选/猜测自动晋升为正式 FACT。
+- 不以固定 0–5、百分制或预设权重代替真实选题证据。
+- 不因为模板写了“Day 1 baseline”就强制在理论结构尚未澄清时过早编码。
 
-## 11. Coach 默认输出
+## 12. Coach 默认输出
 
 每次重要介入优先回答：
 

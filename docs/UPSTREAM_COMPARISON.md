@@ -32,3 +32,8 @@
 | 支撑材料目录 | 保留当前实现 | 当前用 Git tracked files 生成，不依赖系统 `tree` 命令 |
 
 因此，chen 上游在“分文件 + 自动构建”的设计思想上值得保留，但同功能具体实现不替换当前版本。
+
+
+## Route-selection upstream (v0.4.0)
+
+`y3519712124-ui/math-modeling-contest-route-selection` 的 route-led selection、engineering feasibility、refutation、flip condition、fallback 被选择性吸收为 Coach decision knowledge。未采用固定评分公式、固定 near-tie 阈值、固定 Day-One gate 或强制多路线。Selection 被实现为临时 workspace，而不是新增长期 Router/Agent。

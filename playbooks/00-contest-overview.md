@@ -16,3 +16,8 @@
 ## 决策优先级
 
 正确性 > 可解释性 > 完整性 > 稳健性 > 创新性 > 复杂度
+
+
+## 多题候选时的探索空间
+
+尚未选题或出现 route-level blocker 时，可使用 Template 生成的 Selection Workspace。它只承载候选、probe 和决策证据；正式 Competition Repo 建立后仍是唯一正式事实源。Selection 是可回看的探索状态，不是新的比赛阶段。

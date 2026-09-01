@@ -1,4 +1,4 @@
-# Coach Boundary — v0.3.3
+# Coach Boundary — v0.4.0
 
 Coach manages **global decisions**: current priority, risk acceptance, question switching, freeze/rollback, resource allocation and submission readiness.
 

@@ -1,27 +1,24 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re, sys
+import sys
 ROOT=Path(__file__).resolve().parents[1]
 errors=[]
 skill=(ROOT/'SKILL.md').read_text(encoding='utf-8')
 readme=(ROOT/'README.md').read_text(encoding='utf-8')
 for label,text in [('SKILL.md',skill),('README.md',readme)]:
-    if '0.3.3' not in text: errors.append(f'{label}: version 0.3.3 missing')
+    if '0.4.0' not in text: errors.append(f'{label}: version 0.4.0 missing')
 for phrase in ['OFFICIAL_RULES_NEEDED','RULE_PROFILE.json','PENDING_OFFICIAL_RULES_VERIFICATION','不得**给出 `SUBMISSION_READY`']:
-    if phrase not in skill: errors.append(f'SKILL.md: official-rules closure missing {phrase}')
-for stale in ['experiment/self-attack','audit/consistency-check','audit/final-audit','models/qN.md','runs/final/qN.json']:
-    if stale in skill: errors.append(f'SKILL.md: stale contract {stale}')
-if 'SkillHub `registry.yaml`' not in skill and 'SkillHub 的 `registry.yaml`' not in skill:
-    errors.append('SKILL.md: registry routing authority missing')
-if not (ROOT/'templates/competition-repo/DEPRECATED.md').exists():
-    errors.append('embedded competition template not visibly deprecated')
+    if phrase not in skill: errors.append('official-rules closure missing '+phrase)
+for phrase in ['Selection Workspace','cheap probe','flip condition','不得自动把 Selection']:
+    if phrase not in skill: errors.append('selection contract missing '+phrase)
+for rel in ['references/selection-route-decision.md','THIRD_PARTY_NOTICES.md','docs/v0.4.0-changelog.md']:
+    if not (ROOT/rel).exists(): errors.append('missing '+rel)
+if 'SkillHub `registry.yaml`' not in skill and 'SkillHub 的 `registry.yaml`' not in skill: errors.append('registry routing authority missing')
+if not (ROOT/'templates/competition-repo/DEPRECATED.md').exists(): errors.append('embedded template not deprecated')
 legacy=[p for p in (ROOT/'templates/competition-repo').rglob('*') if p.is_file() and p.name!='DEPRECATED.md']
-if legacy: errors.append('obsolete embedded template files remain: '+', '.join(str(p.relative_to(ROOT)) for p in legacy[:5]))
+if legacy: errors.append('obsolete embedded template files remain')
 for p in (ROOT/'playbooks').glob('*.md'):
-    if '情景策略参考，不是执行阶段' not in p.read_text(encoding='utf-8'):
-        errors.append(f'{p.relative_to(ROOT)} missing non-stage guardrail')
+    if '情景策略参考，不是执行阶段' not in p.read_text(encoding='utf-8'): errors.append(str(p.relative_to(ROOT))+' missing non-stage guardrail')
 if errors:
-    print('COACH_VALIDATION_FAIL')
-    for e in errors: print('-',e)
-    sys.exit(1)
-print('COACH_VALIDATION_PASS: state-first + registry routing + single template authority')
+    print('COACH_VALIDATION_FAIL'); [print('-',e) for e in errors]; sys.exit(1)
+print('COACH_VALIDATION_PASS: state-first + selection workspace + information-gain route decisions + registry routing')

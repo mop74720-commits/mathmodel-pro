@@ -1,6 +1,10 @@
-# mathmodel-pro v0.3.3
+# mathmodel-pro v0.4.0
 
-数学建模竞赛 Coach 层。v0.3.3 根据完整三层系统演练与集成审计，把顶层决策正式改为 **State-first**。
+## v0.4.0 — Selection Workspace / Route-led decision
+
+本版把多题/多路线尚未确定建模为临时 Selection Workspace，而不是新增长期 Router 层。Coach 使用 `candidate → decisive unknown → cheap probe → evidence → flip/fallback` 循环；正式选题后只把确认过的证据晋升到 Competition Repo。数值评分降级为可选 proxy。
+
+数学建模竞赛 Coach 层。v0.4.0 根据完整三层系统演练与集成审计，把顶层决策正式改为 **State-first**。
 
 ## 三层关系
 
@@ -28,7 +32,7 @@ python scripts/validate_coach.py
 ```
 
 
-## v0.3.3 Official-Rules Closure
+## v0.4.0 Official-Rules Closure
 
 - 正式竞赛开始后主动核验当届官方规则，不再把“用户未上传规则”视为可忽略的外部事项。
 - 规则未核验不阻塞前期建模，但硬性禁止 `SUBMISSION_READY`。
