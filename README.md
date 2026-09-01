@@ -1,10 +1,15 @@
-# mathmodel-pro v0.4.0
+# mathmodel-pro v0.4.1
 
-## v0.4.0 — Selection Workspace / Route-led decision
+## v0.4.1 — Outcome / Competitiveness repair
+
+在 v0.4.0 Selection/State-first 架构上，修复“可复现就过早冻结”和“系统闭环替代成果质量”的目标漂移。新增 Outcome-first 目标层级，并显式区分 `REPRODUCIBLE` 与 `COMPETITIVE_ENOUGH`；只有存在具体高信息量 challenge 时才继续挑战 incumbent，不引入固定搜索次数或模型数量。
+
+
+## v0.4.1 — Selection Workspace / Route-led decision
 
 本版把多题/多路线尚未确定建模为临时 Selection Workspace，而不是新增长期 Router 层。Coach 使用 `candidate → decisive unknown → cheap probe → evidence → flip/fallback` 循环；正式选题后只把确认过的证据晋升到 Competition Repo。数值评分降级为可选 proxy。
 
-数学建模竞赛 Coach 层。v0.4.0 根据完整三层系统演练与集成审计，把顶层决策正式改为 **State-first**。
+数学建模竞赛 Coach 层。v0.4.1 根据完整三层系统演练与集成审计，把顶层决策正式改为 **State-first**。
 
 ## 三层关系
 
@@ -32,7 +37,7 @@ python scripts/validate_coach.py
 ```
 
 
-## v0.4.0 Official-Rules Closure
+## v0.4.1 Official-Rules Closure
 
 - 正式竞赛开始后主动核验当届官方规则，不再把“用户未上传规则”视为可忽略的外部事项。
 - 规则未核验不阻塞前期建模，但硬性禁止 `SUBMISSION_READY`。
