@@ -1,5 +1,8 @@
 # 论文阶段
 
+> **定位：情景策略参考，不是执行阶段。** 仅在当前 Competition Repo 状态与本情景匹配时使用；不得因为文件编号或时间标签强制推进。
+
+
 ## 写作原则
 
 - 论文随结果同步增长，但只写已经被证据支持的内容。
@@ -26,7 +29,7 @@
 
 ## 论文工程
 
-默认使用 `templates/competition-repo/paper/`：
+默认使用 当前 Competition Repo 的 `paper/`（由独立 `competition-template` 初始化）：
 
 - `main.tex` 只做总装；
 - `sections/` 按问题与模型/求解/验证拆分；

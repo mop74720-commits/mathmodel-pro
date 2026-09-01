@@ -38,7 +38,7 @@
 
 ## 3. LaTeX 路线
 
-默认采用 `templates/competition-repo/paper/` 的分章节结构：
+默认采用 当前 Competition Repo 的 `paper/`（由独立 `competition-template` 初始化） 的分章节结构：
 
 - `main.tex` 负责总装；
 - `sections/` 负责正文；

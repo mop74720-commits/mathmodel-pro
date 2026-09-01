@@ -1,5 +1,8 @@
 # 建模阶段
 
+> **定位：情景策略参考，不是执行阶段。** 仅在当前 Competition Repo 状态与本情景匹配时使用；不得因为文件编号或时间标签强制推进。
+
+
 ## 必做
 
 1. 明确输入、输出、变量、参数、单位、约束和问题间依赖。
@@ -20,7 +23,9 @@
 
 ## 需要调用 Skill 的典型情景
 
-- 模型族不确定 -> model-selection
-- 题意歧义 -> ambiguity-resolution
-- 假设过强 -> hypothesis-review
-- 需要专项理论 -> domain skill
+- 模型族不确定 -> `MODEL_UNCERTAIN`
+- 题意歧义 -> `PROBLEM_AMBIGUOUS`
+- 假设过强 -> `ASSUMPTION_WEAK`
+- 需要领域上下文 -> `DOMAIN_CONTEXT_NEEDED`
+
+实际 Event→Skill 路径以当前 SkillHub `registry.yaml` 为准。

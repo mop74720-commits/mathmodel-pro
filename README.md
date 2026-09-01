@@ -1,39 +1,28 @@
-# mathmodel-pro
+# mathmodel-pro v0.3.2
 
-数学建模竞赛“教练层”仓库。
+数学建模竞赛 Coach 层。v0.3.2 根据 2020C 全系统演练把顶层决策正式改为 **State-first**。
 
-定位：负责比赛大方向、阶段推进、时间管理、质量底线、协作约定和通用模板；不负责具体算法实现，不内置庞大的专项 Skill 集合。
+## 三层关系
 
-## 三层生态中的位置
+```text
+mathmodel-pro          = Coach：现在最值得做什么
+mathmodel-skills       = SkillHub：这个局部问题怎么做
+competition-template   = Competition Repo：本场比赛唯一事实源
+```
 
-- `mathmodel-pro`：教练 / Playbook / Strategy
-- `mathmodel-skills`：专项 Skill Router + Skill Library
-- `CUMCM-YYYY-X`：真实比赛 Git 协作仓库
+## 核心变化
 
-依赖方向：`mathmodel-pro -> mathmodel-skills -> competition repo outputs`。
+- 不再把 READ→MODEL→CODE→WRITE 等当全局状态机；
+- 不再用固定小时数自动触发冻结/写作/提交；
+- playbook/time window 只作情景参考；
+- 四个 Gate 只描述某个问题或产物的质量成熟度；
+- Skill 路径不由 Coach 硬编码，必须读取 SkillHub `registry.yaml`；
+- 独立 `competition-template` 是唯一比赛仓库模板。
 
-## 核心原则
+Coach 默认从 Competition Repo 的 `PROJECT_STATUS.md`、FACTS、QUESTION_MAP、模型合同、Run、Claim-Evidence 和 Decision Log 重新判断优先级。
 
-1. 题面事实优先于一切推断。
-2. 大框架稳定，小问题按需调用 Skill。
-3. 比赛仓库始终保持“当前可提交”状态。
-4. 先 Baseline，再改进；先 MVP，再全量计算。
-5. 模型、实现、结果、论文必须一致。
-6. 48 小时后原则上冻结核心模型，只允许低风险改进。
-7. 论文中的关键结论必须能追溯到真实 Run / 图 / 表 / 代码。
-8. AI 只做辅助，关键判断必须人工核验并留痕。
+发布检查：
 
-## 主流程
-
-READ -> FREEZE -> MODEL -> IMPLEMENT -> VERIFY -> WRITE -> AUDIT -> SUBMIT
-
-详见 `SKILL.md` 与 `playbooks/`。
-
-
-## Competition template
-
-`templates/competition-repo/` 是真实比赛 Git 仓库初始化骨架。其论文部分借鉴 `chenboshuo/cumcm_template` 的分文件与多构建模式思想，但不继承旧版版式规则。
-
-## Upstream overlap selection
-
-v0.3.0 对 `ll2010650-coder/mathmodel-pro` 和 `chenboshuo/cumcm_template` 中与本仓库重叠的能力进行了逐项对比，而不是直接复制。选择依据见 `UPSTREAM_COMPARISON.md`。
+```bash
+python scripts/validate_coach.py
+```

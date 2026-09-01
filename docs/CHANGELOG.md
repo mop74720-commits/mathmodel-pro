@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+- 2020C rehearsal integration patch: State-first Coach, registry-based SkillHub routing, independent Competition Template authority, version/route validation.
+
 ## v0.3.0
 
 这不是“补齐上游文件”，而是对已有重叠能力做逐项择优。
