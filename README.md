@@ -1,6 +1,6 @@
-# mathmodel-pro v0.5.0-alpha
+# mathmodel-pro v0.5.0-alpha.1
 
-## v0.5.0-alpha — Route Selection contract
+## v0.5.0-alpha.1 — Route Selection contract
 
 在 v0.4.1 的 Selection Workspace / State-first 架构上，加入结构化 route
 record、decision record、外部 adapter 边界和不自动晋升 FACT 的 validator。

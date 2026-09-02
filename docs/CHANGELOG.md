@@ -1,11 +1,12 @@
 # Changelog
 
-## v0.5.0-alpha
+## v0.5.0-alpha.1
 
-- 审计并改造 Route Selection Layer 原型后纳入 Coach 兼容契约。
-- 增加 route/decision normalized contract、adapter 边界和独立 validator。
-- 保留 v0.4.1 State-first Decision Engine；不引入长期 Router、第二套 Freeze Engine 或固定总分。
-- 明确 Selection Workspace 到 Competition Repo 的 archive/promote 边界，禁止自动晋升猜测为正式事实。
+- 新增 Route Selection Layer prototype 的 alpha 验证集成。
+- 新增 Route/Decision normalized contract、External route-selection adapter boundary 和 Route validator。
+- 保留 Coach / SkillHub / Competition Repo 三层边界，不新增第二套 Decision Engine。
+- Route Score 不能直接触发 freeze/promote；禁止自动写入 Competition Repo 的 `problem/FACTS.md`。
+- 这是验证版本，不是最终稳定版；不代表正式 `v0.5.0`。
 
 ## 0.4.0
 

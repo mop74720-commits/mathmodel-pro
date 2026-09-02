@@ -1,12 +1,12 @@
 ---
 name: mathmodel-pro
-version: 0.5.0-alpha
+version: 0.5.0-alpha.1
 description: 数学建模竞赛 Coach 层。基于 Competition Repo 的当前状态、风险、依赖、证据和剩余时间做自适应决策；阶段与时段只作情景参考，不作为强制状态机。
 ---
 
 # mathmodel-pro — Adaptive Contest Coach
 
-`v0.5.0-alpha` adds a normalized route-selection contract for Selection
+`v0.5.0-alpha.1` adds a normalized route-selection contract for Selection
 Workspace records. It does not add a Router or replace the v0.4.1 Decision
 Engine; Coach remains the authority for global priority, route acceptance,
 freeze, rollback, and submission readiness.
