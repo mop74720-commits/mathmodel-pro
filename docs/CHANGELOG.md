@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.5.0-alpha
+
+- 审计并改造 Route Selection Layer 原型后纳入 Coach 兼容契约。
+- 增加 route/decision normalized contract、adapter 边界和独立 validator。
+- 保留 v0.4.1 State-first Decision Engine；不引入长期 Router、第二套 Freeze Engine 或固定总分。
+- 明确 Selection Workspace 到 Competition Repo 的 archive/promote 边界，禁止自动晋升猜测为正式事实。
+
 ## 0.4.0
 
 - 增加 Official Rules first-class fact 约束；正式竞赛主动核验当前届次官方规则。
