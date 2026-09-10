@@ -109,6 +109,23 @@ Coach 可能面对两类 workspace：
 
 Selection 冻结后保留为 archive；若 route-level blocker 触发既有 flip condition，Coach 可以重新读取它。
 
+### 4.5 Historical Experience Memory：经验是 prior，不是当前证据
+
+当存在真实的选题、路线或模型不确定性时，Coach 应在凭空扩展候选前先读取 `experience/index.yaml`，按**问题结构而不是题目名称**检索少量历史案例；跨案例成功模式和失败模式分别查 `experience/patterns.yaml` 与 `experience/failures.yaml`。
+
+历史经验只能作为 prior：
+
+- 可以提高某条 baseline、decomposition、validation 或 fallback 进入 shortlist 的优先级；
+- 可以把历史 failure mode 转成当前题的 refutation test；
+- 可以提示最值得做的 cheap probe；
+- 不可以因为某篇获奖论文或旧赛题使用某模型，就把模型机械绑定到当前题；
+- 不可以把历史参数、阈值、最优值或案例结论晋升为当前 `FACT`；
+- deciding evidence 必须来自当前题面、附件、官方来源或当前可复现实验。
+
+默认只取 Top-3 历史案例，必要时扩展到 Top-5。每次实际借用历史案例至少记录 `case_id / matched structure / mismatch / transfer risk / candidate effect / deciding probe`。若没有校准过的相似度模型，不制造“92.7% 相似”之类伪精确分数。
+
+具体检索与迁移边界见 `experience/README.md` 和 `references/selection-route-decision.md`。
+
 ## 5. 每次重新决策时先看什么
 
 若处于 Selection 状态，先读取 `SELECTION_STATUS.md / PROBLEM_CARDS.md / ROUTE_CARDS.md / PROBE_LEDGER.csv / DECISION.md` 中已经存在的内容；若正式 Competition Repo 已建立，则优先读取其中已经存在的内容，不要求所有文件都齐全：
@@ -249,6 +266,7 @@ Coach 只描述**局部事件/问题**，不硬编码 Skill 文件路径。典�
 - 不在证据不足时仅因为接近某个时间点就机械冻结模型。
 - 不让 AI 生成的核心结论未经证据核验直接进入论文。
 - 不把 Selection Workspace 的候选/猜测自动晋升为正式 FACT。
+- 不把历史案例、历史参数、历史阈值或历史最优结果自动晋升为当前 FACT。
 - 不以固定 0–5、百分制或预设权重代替真实选题证据。
 - 不因为模板写了“Day 1 baseline”就强制在理论结构尚未澄清时过早编码。
 

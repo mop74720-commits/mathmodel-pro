@@ -13,7 +13,9 @@ for phrase in ['Selection Workspace','cheap probe','flip condition','不得自�
     if phrase not in skill: errors.append('selection contract missing '+phrase)
 for phrase in ['Outcome first','REPRODUCIBLE','COMPETITIVE_ENOUGH','incumbent challenge','系统闭环度']:
     if phrase not in skill: errors.append('quality/competitiveness invariant missing '+phrase)
-for rel in ['references/selection-route-decision.md','THIRD_PARTY_NOTICES.md','docs/v0.4.0-changelog.md','docs/v0.4.1-changelog.md']:
+for phrase in ['Historical Experience Memory','experience/index.yaml','历史经验只能作为 prior','deciding evidence 必须来自当前题面']:
+    if phrase not in skill: errors.append('historical-experience integration missing '+phrase)
+for rel in ['references/selection-route-decision.md','THIRD_PARTY_NOTICES.md','docs/v0.4.0-changelog.md','docs/v0.4.1-changelog.md','experience/README.md','experience/index.yaml','experience/patterns.yaml','experience/failures.yaml','scripts/validate_experience.py']:
     if not (ROOT/rel).exists(): errors.append('missing '+rel)
 if 'SkillHub `registry.yaml`' not in skill and 'SkillHub 的 `registry.yaml`' not in skill: errors.append('registry routing authority missing')
 if not (ROOT/'templates/competition-repo/DEPRECATED.md').exists(): errors.append('embedded template not deprecated')
@@ -23,4 +25,4 @@ for p in (ROOT/'playbooks').glob('*.md'):
     if '情景策略参考，不是执行阶段' not in p.read_text(encoding='utf-8'): errors.append(str(p.relative_to(ROOT))+' missing non-stage guardrail')
 if errors:
     print('COACH_VALIDATION_FAIL'); [print('-',e) for e in errors]; sys.exit(1)
-print('COACH_VALIDATION_PASS: state-first + outcome-first + evidence-driven incumbent challenge + selection workspace')
+print('COACH_VALIDATION_PASS: state-first + outcome-first + historical-prior retrieval + evidence-driven incumbent challenge + selection workspace')
