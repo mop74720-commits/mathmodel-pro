@@ -1,0 +1,229 @@
+schema: mathmodel-pro-experience/v1
+updated: 2026-09-10
+policy:
+  role: historical_prior_only
+  rule: "Historical cases may rank candidates, suggest probes, expose failure modes, and suggest validation; they are prior, not current-problem evidence."
+  current_evidence_required: true
+matching_dimensions:
+  - deliverable
+  - problem_family
+  - data_modality
+  - variable_structure
+  - constraint_structure
+  - dynamics
+  - uncertainty
+  - validation_opportunity
+  - engineering_risk
+retrieval:
+  default_top_k: 3
+  max_top_k: 5
+  prefer_structure_over_topic_name: true
+  record:
+    - case_id
+    - matched_structure
+    - mismatch
+    - transfer_risk
+    - candidate_effect
+    - deciding_probe
+
+cases:
+  - id: AW-A016
+    title: 板凳龙位置与速度分析
+    source_kind: award_case
+    problem_families: [mechanistic, geometry, kinematics]
+    data_modality: [parameters]
+    structure_tags: [spiral_geometry, recursive_kinematics, collision_detection, matrix_batching]
+    methods: [等距螺线, 极坐标弧长积分, 变步长逼近, 碰撞检测, 矩阵化递推]
+    reusable_patterns: [progressive_modeling, geometry_before_search, claim_result_link]
+    validation_patterns: [degenerate_case, geometric_consistency]
+    transfer_conditions: "连续几何运动、递推状态、碰撞或边界事件决定答案。"
+    non_transfer_conditions: "真实动力学主导而非预设轨迹时，不能把运动学模型当动力学证据。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: AW-A053
+    title: 板凳龙形态调节与目标优化
+    source_kind: award_case
+    problem_families: [mechanistic, geometry, optimization]
+    data_modality: [parameters]
+    structure_tags: [spiral_geometry, collision_detection, single_objective, constrained_search]
+    methods: [阿基米德螺线, 分离轴定理, 变步长遍历, 单目标优化, 粒子群]
+    reusable_patterns: [prove_structure_before_search, symmetry_or_geometry_reduction, explicit_optimization_contract]
+    validation_patterns: [sensitivity, cross_question_consistency]
+    transfer_conditions: "几何可行域可以先解析压缩，再做低维优化。"
+    non_transfer_conditions: "不要因为历史案例用了 PSO 就默认当前非线性问题也需要启发式。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: AW-A196
+    title: 无人机烟幕遮蔽策略优化
+    source_kind: award_case
+    problem_families: [optimization, geometry, decision]
+    data_modality: [parameters]
+    structure_tags: [kinematics, boolean_feasibility, multi_stage_decision, dimensionality_reduction, mixed_integer]
+    methods: [遮挡布尔函数, 二分查找, 多起点变步长, 差分进化, 分层优化, 整数规划, 分支定界]
+    reusable_patterns: [prove_before_compute, dimensionality_reduction, hierarchical_optimization, assignment_then_parameters]
+    validation_patterns: [independent_solver_crosscheck, local_refinement]
+    transfer_conditions: "高维策略问题可拆成结构决策与连续参数优化，且几何性质能压缩搜索空间。"
+    non_transfer_conditions: "历史最优策略和参数不得迁移；只能迁移分解方式与验证思路。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: AW-B060
+    title: 红外干涉外延层厚度反演
+    source_kind: award_case
+    problem_families: [mechanistic, inverse_problem, estimation]
+    data_modality: [signal, spectrum]
+    structure_tags: [physics_model, nonlinear_inversion, parameter_estimation, dual_route]
+    methods: [Drude折射率, 干涉反射模型, 波谷周期法, 牛顿迭代]
+    reusable_patterns: [physics_first, direct_estimate_plus_inversion]
+    validation_patterns: [independent_route_crosscheck]
+    transfer_conditions: "物理公式可给出直接估计，同时存在数值反演路线。"
+    non_transfer_conditions: "模型参数不可辨识或色散模型不适用时，必须先做可辨识性检查。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: AW-B157
+    title: 双光束与多光束干涉厚度测量
+    source_kind: award_case
+    problem_families: [mechanistic, inverse_problem, estimation]
+    data_modality: [signal, spectrum]
+    structure_tags: [optics, spectral_analysis, nonlinear_fit, model_upgrade]
+    methods: [Snell公式, Fresnel公式, Cauchy色散, 傅里叶变换, 非线性最小二乘, Airy多光束]
+    reusable_patterns: [baseline_then_physics_upgrade, spectral_feature_extraction]
+    validation_patterns: [model_comparison, residual_structure]
+    transfer_conditions: "基础物理模型存在系统残差，且更完整机制能解释该残差。"
+    non_transfer_conditions: "复杂多光束模型只有在数据能支持新增参数时才值得采用。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: AW-C023
+    title: NIPT时点优化与异常判定
+    source_kind: award_case
+    problem_families: [statistics, optimization, decision]
+    data_modality: [tabular, grouped_repeated_measure]
+    structure_tags: [mixed_effects, grouping, risk_minimization, multiple_testing]
+    methods: [线性混合效应模型, 动态规划分组, 风险最小化, Z检验, FDR校正]
+    reusable_patterns: [respect_group_structure, estimation_then_decision]
+    validation_patterns: [multiple_testing_control, group_stability]
+    transfer_conditions: "存在个体/组层级相关性，并需将统计估计转成决策时点或策略。"
+    non_transfer_conditions: "独立同分布假设成立时不应为复杂而强行使用混合效应模型。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: AW-C132
+    title: NIPT统计建模与元学习决策
+    source_kind: award_case
+    problem_families: [statistics, machine_learning, optimization]
+    data_modality: [tabular, grouped_repeated_measure]
+    structure_tags: [mixed_effects, gaussian_process, survival, ensemble, hyperparameter_search]
+    methods: [LMM_REML, 高斯过程回归, 遗传算法, DeepHit, LightGBM, Optuna, stacking]
+    reusable_patterns: [baseline_before_ensemble, structured_validation_for_complex_ml]
+    validation_patterns: [heldout_comparison, ablation]
+    transfer_conditions: "样本与特征足以支持复杂模型，并有严格分组/时间切分和基线。"
+    non_transfer_conditions: "小样本或验证薄弱时，不把模型堆叠当创新。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: AW-D037
+    title: 矿井突水漫延与动态逃生
+    source_kind: award_case
+    problem_families: [network, simulation, optimization]
+    data_modality: [graph]
+    structure_tags: [dynamic_graph, propagation, shortest_path, evacuation]
+    methods: [水流漫延模型, BFS, 动态网络Dijkstra]
+    reusable_patterns: [state_dependent_network, simulation_plus_routing]
+    validation_patterns: [conservation_or_reachability, scenario_check]
+    transfer_conditions: "网络边/节点状态随时间变化，路径可行性依赖传播过程。"
+    non_transfer_conditions: "静态最短路不能直接替代时变网络路径。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: AW-E030
+    title: AI辅助体测姿态识别
+    source_kind: award_case
+    problem_families: [data_analysis, prediction, signal_processing]
+    data_modality: [time_series, tabular]
+    structure_tags: [smoothing, event_detection, correlation, regression, tree_model]
+    methods: [Savitzky_Golay, 一阶微分事件检测, Spearman相关, 随机森林, 多元线性回归]
+    reusable_patterns: [signal_cleanup_before_model, interpretable_baseline_plus_nonlinear]
+    validation_patterns: [baseline_comparison, event_sanity_check]
+    transfer_conditions: "原始序列含噪且关键事件/阶段必须先定位，再进行预测或评价。"
+    non_transfer_conditions: "滤波参数必须由信号尺度或验证决定，不能沿用历史窗口。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/award-winning-papers.md
+
+  - id: TR-T01
+    title: 月球日心轨迹仿真训练
+    source_kind: training_case_with_review
+    problem_families: [mechanistic, kinematics, simulation]
+    data_modality: [parameters]
+    structure_tags: [progressive_scenarios, coordinate_transform, kepler_equation, numerical_validation]
+    methods: [位置矢量叠加, 空间旋转矩阵, 开普勒方程, 牛顿迭代]
+    reusable_patterns: [progressive_modeling, degenerate_case_validation, quantitative_residual]
+    failure_patterns: [wrong_error_magnitude, model_code_drift, sensitivity_definition_mismatch, symbol_collision]
+    validation_patterns: [degenerate_case, residual, convergence]
+    transfer_conditions: "多个情景是在同一核心模型上逐层增加自由度。"
+    non_transfer_conditions: "演示参数不能伪装成真实物理参数；运动学边界必须显式声明。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/training-papers-lessons.md
+
+  - id: TR-T02
+    title: 钻井布局几何优化训练
+    source_kind: training_case_with_review
+    problem_families: [geometry, discrete_optimization]
+    data_modality: [point_coordinates]
+    structure_tags: [periodicity, symmetry, rotation, coarse_to_fine_search]
+    methods: [mod1周期化, 环形距离, 反向旋转, 粗细两阶段枚举]
+    reusable_patterns: [equivalent_transform, symmetry_reduction, coarse_to_fine_search]
+    failure_patterns: [result_version_drift, insufficient_step_justification]
+    validation_patterns: [step_size_convergence, boundary_margin]
+    transfer_conditions: "问题存在周期性、旋转/平移对称性，可先压缩参数域。"
+    non_transfer_conditions: "粗网格结果不能直接声称最优，需细化或界证明。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/training-papers-lessons.md
+
+  - id: TR-T03
+    title: 足球争冠概率训练
+    source_kind: training_case_with_review
+    problem_families: [statistics, stochastic_simulation, dynamic_programming]
+    data_modality: [tabular]
+    structure_tags: [distribution_test, pairwise_probability, tournament, monte_carlo]
+    methods: [正态性检验, 经验分布, 蒙特卡洛, 递推动态规划, 路径枚举]
+    reusable_patterns: [independent_method_crosscheck, probability_normalization_invariant]
+    failure_patterns: [enumeration_mislabeled_as_monte_carlo, abstract_method_drift, probability_mass_loss]
+    validation_patterns: [probability_sum_to_one, multi_method_crosscheck]
+    transfer_conditions: "概率传播存在明确赛制/状态图，并可由不同计算路线互验。"
+    non_transfer_conditions: "确定性全枚举不能称为蒙特卡洛；归一化不能掩盖遗漏状态。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/training-papers-lessons.md
+
+  - id: TR-T04
+    title: 钢管订购与运输优化训练
+    source_kind: training_case_with_review
+    problem_families: [network, mixed_integer_optimization]
+    data_modality: [graph, tabular]
+    structure_tags: [network_preprocessing, cost_matrix, flow_conservation, mixed_integer, sensitivity]
+    methods: [两阶段Dijkstra, 运费矩阵, 混合整数优化, 单因素扰动, 树形推广]
+    reusable_patterns: [compress_network_before_optimization, independent_objective_recalculation, active_constraint_sensitivity]
+    failure_patterns: [parameter_variable_confusion, figure_reference_drift, invalid_external_reference_comparison]
+    validation_patterns: [flow_conservation, constraint_back_substitution, independent_recalculation]
+    transfer_conditions: "复杂路网可先压缩成成本矩阵，再做采购/分配/流量优化。"
+    non_transfer_conditions: "整数问题的连续对偶/Reduced Cost解释不可无条件迁移。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/training-papers-lessons.md
+
+  - id: CL-2001B-VESSEL
+    title: 2001 CUMCM B 血管三维重建
+    source_kind: classic_case
+    problem_families: [image, geometry, reconstruction]
+    data_modality: [binary_images]
+    structure_tags: [image_inspection, distance_transform, medial_axis, subpixel, envelope]
+    methods: [bwdist距离变换, 最大内切圆, 抛物线子像素拟合, 球滚动包络]
+    reusable_patterns: [inspect_data_before_shape_assumption, geometry_from_distance_field, subpixel_refinement]
+    failure_patterns: [assumed_data_shape]
+    validation_patterns: [image_semantics_check, geometric_consistency]
+    transfer_conditions: "切片图像包含几何边界，目标可由距离场或包络结构识别。"
+    non_transfer_conditions: "不得凭常识预设截面为圆或其他形状；必须先检查真实像素结构。"
+    source_repo: ll2010650-coder/mathmodel-pro
+    source_path: references/case-vessel-3d-reconstruction.md

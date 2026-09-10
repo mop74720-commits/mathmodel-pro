@@ -16,6 +16,32 @@
 - 几何：可辨识性、镜像解、条件数、小案例逆验；
 - 仿真：规则可校准性、确定性极限。
 
+## Historical experience prior
+
+当当前题或候选路线存在明显结构特征时，先读取 `experience/index.yaml`，按**问题结构而不是题目名称**检索少量历史案例。历史经验的作用是改变 candidate prior，而不是替代当前题证据。
+
+历史经验只能作为 prior：
+
+- 可以把过去有效的 baseline / decomposition / validation 提前放入 shortlist；
+- 可以把过去出现过的 failure mode 提前变成 refutation test；
+- 可以提示哪个 cheap probe 最可能快速淘汰错误路线；
+- 不可以把历史模型名机械绑定到当前题型；
+- 不可以把历史结果、参数、阈值或“获奖论文做法”写成当前事实；
+- deciding evidence 必须来自当前赛题本身。
+
+每次实际借用一个案例，至少记录：
+
+- `case_id`
+- matched structure
+- mismatch
+- transfer risk
+- candidate effect
+- deciding probe
+
+默认只检索 Top-3，必要时扩展到 Top-5。若没有可信的数值相似度模型，使用 high/medium/low 或 pairwise evidence，不制造伪精确分数。
+
+跨案例模式可进一步查 `experience/patterns.yaml`，已知失败模式查 `experience/failures.yaml`。
+
 ## Problem Card（按需）
 
 - deliverable clarity
@@ -64,3 +90,5 @@
 ## Upstream inspiration
 
 选择性吸收 `y3519712124-ui/math-modeling-contest-route-selection` 的 route-led selection、engineering feasibility、refutation、flip condition 与 fallback 思想；固定评分权重、固定分差、固定 Day-One gate 与强制多路线规则未采用。MIT 许可见 `THIRD_PARTY_NOTICES.md`。
+
+2026-09-10 对 `ll2010650-coder/mathmodel-pro` 做第二轮案例级吸收：恢复其获奖论文、训练论文和经典题中可迁移的结构经验，但只进入 `experience/` 作为 historical prior，不恢复固定六阶段工作流和环境/篇幅硬编码。

@@ -19,6 +19,19 @@
 
 明确拒绝升级为通用规则的上游内容：固定软件（MATLAB/LINGO/Origin）、固定本机路径、固定文献数量、固定页数/字数/图数、固定敏感性扰动比例、固定 Monte Carlo 次数、固定随机算法重复次数、固定章节小节数量。
 
+### 2026-09-10 第二轮：案例粒度恢复
+
+第一次融合把长案例压缩成了通用规则，适合常驻 Coach，但损失了“过去遇到过什么结构、什么方法成功/失败、什么验证最有信息量”的可检索粒度。
+
+本轮新增 `experience/`：
+
+- `experience/index.yaml`：14 个结构化案例卡；
+- `experience/patterns.yaml`：跨案例成功模式；
+- `experience/failures.yaml`：高频失败模式；
+- `experience/README.md`：prior-not-evidence 边界与检索协议。
+
+这不是恢复上游固定六阶段工作流，而是恢复**案例级 prior**。历史案例只用于候选生成、probe、refutation、fallback 与 validation；当前题的 deciding evidence 必须来自当前赛题。
+
 ## chenboshuo/cumcm_template
 
 | 重叠项 | 选择 | 原因 |
@@ -32,7 +45,6 @@
 | 支撑材料目录 | 保留当前实现 | 当前用 Git tracked files 生成，不依赖系统 `tree` 命令 |
 
 因此，chen 上游在“分文件 + 自动构建”的设计思想上值得保留，但同功能具体实现不替换当前版本。
-
 
 ## Route-selection upstream (v0.4.0)
 

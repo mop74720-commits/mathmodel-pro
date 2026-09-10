@@ -1,0 +1,43 @@
+schema: mathmodel-pro-experience-patterns/v1
+updated: 2026-09-10
+patterns:
+  - id: progressive_modeling
+    trigger: "后续问题是在前一模型上逐层增加机制或自由度"
+    action: "保持统一状态/变量框架，只增加必要结构；为每次升级设计退化回前一层的检查。"
+    evidence_to_seek: "新增机制是否真的改善拟合、解释或决策，而不是只增加复杂度。"
+  - id: prove_before_compute
+    trigger: "搜索空间很大，但存在连续性、对称性、单调性或几何性质"
+    action: "先证明或验证可缩小搜索空间的结构，再进入数值搜索。"
+    evidence_to_seek: "小实例、边界行为、反例搜索或解析性质。"
+  - id: dimensionality_reduction
+    trigger: "策略变量维度高且部分变量由结构关系决定"
+    action: "先消去、分组或条件化变量，再优化剩余自由度。"
+    evidence_to_seek: "降维前后可行域等价性或近似误差。"
+  - id: hierarchical_optimization
+    trigger: "问题同时包含离散结构决策与连续参数调节"
+    action: "优先测试‘结构/分配 → 连续参数’的分层路线，并保留联合优化作为挑战项。"
+    evidence_to_seek: "分层造成的最优性损失是否可接受；小规模联合解对照。"
+  - id: independent_method_crosscheck
+    trigger: "核心结论价值高，且存在第二条计算路线"
+    action: "用机制不同的独立方法重算关键结论，而不是只换参数。"
+    evidence_to_seek: "两路线误差、分歧来源和决策是否翻转。"
+  - id: degenerate_case_validation
+    trigger: "模型包含新增参数、机制或复杂边界"
+    action: "令关键参数取极限/零值，使模型退化到已知简单情形。"
+    evidence_to_seek: "退化后的解析式、守恒量或已知答案。"
+  - id: compress_network_before_optimization
+    trigger: "底层路网复杂，但上层决策只依赖节点间最小成本/距离"
+    action: "先用图算法构造成本矩阵，再做采购、分配或整数优化。"
+    evidence_to_seek: "压缩矩阵是否保持上层目标所需信息。"
+  - id: inspect_data_before_shape_assumption
+    trigger: "图像、网络、表格等附件容易诱发先验形状或字段假设"
+    action: "先检查真实结构、取值、单位、缺失和像素/边语义，再决定模型。"
+    evidence_to_seek: "实际数据 profile、unique/range、样例可视化和异常点。"
+  - id: baseline_then_physics_upgrade
+    trigger: "简单模型能给出结果，但残差存在稳定结构"
+    action: "保留 baseline，再引入能解释该残差的更完整机制。"
+    evidence_to_seek: "复杂模型是否在留出数据、残差结构或物理一致性上提供新增价值。"
+  - id: signal_cleanup_before_model
+    trigger: "时序信号噪声会影响事件检测、特征或下游预测"
+    action: "把滤波/平滑与事件检测作为显式预处理合同，并通过原始信号对照验证。"
+    evidence_to_seek: "关键事件位置对窗口/参数是否稳定。"

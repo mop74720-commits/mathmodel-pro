@@ -1,0 +1,53 @@
+schema: mathmodel-pro-experience-failures/v1
+updated: 2026-09-10
+failures:
+  - id: model_code_drift
+    symptom: "正文公式、参数、单位、边界或假设与实际代码不一致"
+    risk: "结果不可复现，且论文主张可能对应错误实现"
+    probe: "逐项执行 formulation-implementation contract 与 Final Run 回代"
+    fallback: "冻结旧结果，修合同后重跑并统一回填"
+  - id: wrong_error_magnitude
+    symptom: "误读科学计数法、百分比或数量级，并据此宣称高精度"
+    risk: "直接造成数学解释错误"
+    probe: "同时报告原始误差、相对误差、单位、max/mean/RMS 与基准量级"
+    fallback: "撤回精度形容词，按正确量级重写结论"
+  - id: sensitivity_definition_mismatch
+    symptom: "敏感性指标与其理论定义不一致，或指标根本不受被扰动参数影响"
+    risk: "灵敏度图看似完整但结论无意义"
+    probe: "先解析检查指标对参数的依赖关系，再做数值扰动"
+    fallback: "换成能反映该参数影响的物理/决策指标"
+  - id: result_version_drift
+    symptom: "摘要、正文、表格、附录引用了不同 Run 或不同参数版本"
+    risk: "关键数字互相冲突"
+    probe: "建立 Final Run → claim/table/figure 的来源映射"
+    fallback: "以冻结 Final Run 为唯一事实源重新回填"
+  - id: insufficient_step_justification
+    symptom: "网格/步长/容差由习惯选择，没有收敛或尺度依据"
+    risk: "可能错过可行域、极值或事件"
+    probe: "步长减半、局部细化、边界裕量或小实例精确对照"
+    fallback: "采用粗到细搜索并记录停止证据"
+  - id: enumeration_mislabeled_as_monte_carlo
+    symptom: "确定性全枚举被称为蒙特卡洛"
+    risk: "方法定义错误，随机误差解释也随之错误"
+    probe: "检查是否实际存在随机抽样与 seed"
+    fallback: "正确命名为枚举；若需要蒙特卡洛则显式抽样并报告不确定性"
+  - id: probability_mass_loss
+    symptom: "概率路径遗漏，结果和不为 1，之后只靠归一化掩盖"
+    risk: "模型状态空间不完整"
+    probe: "检查完整状态/路径覆盖与概率守恒"
+    fallback: "补齐遗漏状态后再归一化，而不是先修数字"
+  - id: parameter_variable_confusion
+    symptom: "把预处理得到的成本、距离或常数写成决策变量"
+    risk: "模型语义和约束解释错误"
+    probe: "逐个变量标记 controllable / observed / derived / fixed"
+    fallback: "重写符号表和模型合同"
+  - id: heuristic_global_optimum
+    symptom: "一次 GA/PSO/SA/局部搜索结果被写成已证明全局最优"
+    risk: "结论强度超过证据"
+    probe: "多 seed/多初值、小规模精确解、上下界或独立求解器挑战"
+    fallback: "降级措辞为 best-found / near-optimal candidate"
+  - id: assumed_data_shape
+    symptom: "未查看真实数据就预设图像形状、网络结构、字段类型或分布"
+    risk: "从第一步就选错模型"
+    probe: "先做数据 profile、样例可视化、unique/range/size 检查"
+    fallback: "撤销先验结构，重新从实际数据定义问题"
